@@ -3,7 +3,7 @@ const express = require('express');
 // generate a running express app
 const app = express();
 
-// router handler, watching GET method trying to access '/'
+// route handler, watching GET method trying to access '/'
 app.get('/', (req, res) => {
 	res.send({hi: 'there'});
 });
