@@ -9,7 +9,7 @@ module.exports = (app) => {
 		})
 	);
 
-	// handle response from Google authentication
+	// handle response from Google after OAuth authentication to get details about a user
 	app.get(
 		'/auth/google/callback',
 		passport.authenticate('google')

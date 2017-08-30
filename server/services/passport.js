@@ -1,4 +1,5 @@
 const passport = require('passport');
+// Google authentication strategy for PassportJS
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 // register Google+ API https://console.developers.google.com
 // Google API credentials
@@ -13,10 +14,9 @@ passport.use(
 			clientSecret: keys.googleClientSecret,
 			callbackURL: '/auth/google/callback'
 		}, 
+		// execute this verify callback when user profile is returned
 		(accessToken, refreshToken, profile, done) => {
-			console.log('accessToken', accessToken);
-			console.log('refreshToken', refreshToken);
-			console.log('profile', profile);
+			console.log('Welcome ' + profile.name.givenName);
 		}
 	)
 );

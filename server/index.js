@@ -1,12 +1,17 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
 
-// run PassportJS to handle authentication
+// service to handle authentication
 require('./services/passport');
 // import routes
 const authRoutes = require('./routes/authRoutes');
 
 // create a running express app
 const app = express();
+
+// connect to MongoDB
+mongoose.connect(keys.mongoURL);
 
 // execute authentication routes, for simplicity, we can use require('./routes/authRoutes')(app)
 authRoutes(app);
