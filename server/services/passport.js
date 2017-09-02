@@ -37,20 +37,18 @@ passport.use(
 			proxy: true
 		}, 
 		// execute this verify callback when user profile is returned
-		(accessToken, refreshToken, profile, done) => {
+		async (accessToken, refreshToken, profile, done) => {
 			// check if the user is already in database
-			User.findOne({ googleId: profile.id })
-				.then((existingUser) => {
-					if (existingUser) {
-						done(null, existingUser);
-					} else {
-						// create a new user in User collection
-						new User({ googleId: profile.id }).save()
-							.then((user) => {
-								done(null, user);
-							})
-					}
-				})
+			const existingUser = await User.findOne({ googleId: profile.id });
+
+			if (existingUser) {
+				// return the existing user
+				done(null, existingUser);
+			} else {
+				// create a new user in User collection
+				const user = await new User({ googleId: profile.id }).save();
+				done(null, user);
+			}
 		}
 	)
 );
