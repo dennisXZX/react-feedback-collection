@@ -72,18 +72,18 @@ passport.use(
 			callbackURL: '/auth/google/callback',
 			proxy: true
 		}, (accessToken, refreshToken, profile, done) => {
-		    // this callback function is called when authentication is complete
+			// this callback function is called when authentication is complete
 		}
 	)
 );
 
 // set up the authentication route
 app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    // specify what permissions we ask for
-      scope: ['profile', 'email']
-  })
+	'/auth/google',
+	passport.authenticate('google', {
+		// specify what permissions we ask for
+		scope: ['profile', 'email']
+	})
 );
 ```
 
@@ -94,8 +94,8 @@ app.get(
 ```
 // After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included
 app.get(
-    '/auth/google/callback',
-    passport.authenticate('google')
+	'/auth/google/callback',
+	passport.authenticate('google')
 );
 ```
 
@@ -112,7 +112,7 @@ passport.use(
 			callbackURL: '/auth/google/callback',
 			proxy: true
 		}, (accessToken, refreshToken, profile, done) => {
-		    // this callback function is executed
+			// this callback function is executed
 		}
 	)
 );
