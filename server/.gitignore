@@ -5,7 +5,3 @@ node_modules
 # Dev Related Info #
 ############
 dev.js
-
-# IDE Auto Generated #
-############
-.idea/
