@@ -38,6 +38,7 @@ passport.use(
 			proxy: true
 		}, 
 		// this callback function is called when a Google user profile is returned
+		// we will either create a new user or retrieve the user from database based on its existence
 		async (accessToken, refreshToken, profile, done) => {
 			// check if the user is already in database
 			const existingUser = await User.findOne({ googleId: profile.id });

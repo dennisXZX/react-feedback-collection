@@ -119,3 +119,24 @@ passport.use(
 ```
 
 ### MongoDB and Mongoose
+
+MongoDB stores collections, which in turn stores records.
+
+For example, here is a MongoDB database with three collections, namely, Users, Posts and Payments.
+
+MongoDB Collection
+----------------------------
+| Users | Posts | Payments |
+----------------------------
+
+Each collection can have multiple records, with each record a plain Javascript object. Notice that each record can has different properties, which is in stark contrast with traditional database solutions.
+
+MongoDB Record
+------------------------------------
+| {                  | {           |
+|   "id": 1,         |   "id": 2   |
+|   "name": "dennis" |   "age": 30 |
+|	}                  | }           |
+------------------------------------
+
+Mongoose matches a model class to MongoDB collection and a model instance to a MongoDB record, so we can easily manipulate them in Javascript.
