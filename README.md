@@ -57,9 +57,12 @@ We will set our Node.js to listen to port 5000 on our local machine. When an HTT
 
 2. PassportJS will direct user to Google with an google client ID and client secret to ask for permission
 
-When we use PassportJS to handle OAuth, we have to install a general Passport library as well as a Passport strategy. A strategy is used to handle a specific provider, such as, Google, Facebook, etc.
 
 ```
+/*
+When we use PassportJS to handle OAuth, we have to install a general Passport library as well as a Passport strategy. A strategy is used to handle a specific provider, such as, Google, Facebook, etc.
+*/
+
 // inform Express to handle OAuth using PassportJS
 passport.use(
 	new GoogleStrategy(
@@ -76,11 +79,11 @@ passport.use(
 
 // set up the authentication route
 app.get(
-    '/auth/google',
-    passport.authenticate('google', {
-    	// specify what permissions we ask for
-        scope: ['profile', 'email']
-    })
+  '/auth/google',
+  passport.authenticate('google', {
+    // specify what permissions we ask for
+      scope: ['profile', 'email']
+  })
 );
 ```
 
