@@ -27,7 +27,7 @@ passport.deserializeUser((id, done) => {
 });
 
 
-// handle OAuth using PassportJS
+// inform Express to handle OAuth using PassportJS
 passport.use(
 	// Google authentication
 	new GoogleStrategy(
@@ -37,7 +37,7 @@ passport.use(
 			callbackURL: '/auth/google/callback',
 			proxy: true
 		}, 
-		// execute this verify callback when user profile is returned
+		// this callback function is called when a Google user profile is returned
 		async (accessToken, refreshToken, profile, done) => {
 			// check if the user is already in database
 			const existingUser = await User.findOne({ googleId: profile.id });

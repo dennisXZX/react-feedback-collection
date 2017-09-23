@@ -39,8 +39,80 @@ React APP
  MongoDB
 ```     
 
+### Node.js and Express
+
 The following diagram shows the relationship between Node.js and Express
 
 ![Relationship between Node.js and Express](./diagrams/express_and_node.png)
 
 We will set our Node.js to listen to port 5000 on our local machine. When an HTTP request comes to port 5000, Node.js will hand the incoming request to Express. Upon receiving the request, Express will look through all the route handlers to determine which one should be responsible for handling the request. The route handler responsible for the request will then process it and generates a response, which will then be sent back to Node.js. Finally, Node.js will send the response back to the request.
+
+![Express Workflow](./diagrams/express_workflow.png)
+
+### OAuth and PassportJS
+
+![OAuth Workflow](./diagrams/OAuth_flow.png)
+
+1. User clicks 'Login' button and will be directed to localhost:5000/auth/google
+
+2. PassportJS will direct user to Google with an google client ID and client secret to ask for permission
+
+When we use PassportJS to handle OAuth, we have to install a general Passport library as well as a Passport strategy. A strategy is used to handle a specific provider, such as, Google, Facebook, etc.
+
+```
+// inform Express to handle OAuth using PassportJS
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: keys.googleClientID,
+			clientSecret: keys.googleClientSecret,
+			callbackURL: '/auth/google/callback',
+			proxy: true
+		}, (accessToken, refreshToken, profile, done) => {
+		    // this callback function is called when authentication is complete
+		}
+	)
+);
+
+// set up the authentication route
+app.get(
+    '/auth/google',
+    passport.authenticate('google', {
+    	// specify what permissions we ask for
+        scope: ['profile', 'email']
+    })
+);
+```
+
+3. User grants permission to the application and be redirected back to an authentication complete URL with a code
+
+4. Extract the code from URL and send request to Google with code included
+
+```
+// After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included
+app.get(
+    '/auth/google/callback',
+    passport.authenticate('google')
+);
+```
+
+5. Google sees code in URL and replies with details about the user
+
+6. Authentication is complete and the callback function in passport.use() is executed
+
+```
+passport.use(
+	new GoogleStrategy(
+		{
+			clientID: keys.googleClientID,
+			clientSecret: keys.googleClientSecret,
+			callbackURL: '/auth/google/callback',
+			proxy: true
+		}, (accessToken, refreshToken, profile, done) => {
+		    // this callback function is executed
+		}
+	)
+);
+```
+
+### MongoDB and Mongoose

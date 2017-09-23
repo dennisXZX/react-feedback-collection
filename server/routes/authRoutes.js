@@ -5,11 +5,12 @@ module.exports = (app) => {
 	app.get(
 		'/auth/google',
 		passport.authenticate('google', {
-			scope: ['profile', 'email'] // what permissions we ask for
+			// specify what permissions we ask for
+			scope: ['profile', 'email']
 		})
 	);
 
-	// Passport asks for user details with the Google code from initialization
+	// After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included
 	app.get(
 		'/auth/google/callback',
 		passport.authenticate('google')
