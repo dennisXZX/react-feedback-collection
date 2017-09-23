@@ -1,11 +1,11 @@
-# Packages #
+# Packages Dependencies #
 ############
 node_modules
 
-# Dev only Info #
+# Dev Related Info #
 ############
 dev.js
 
-# IDE generated #
+# IDE Auto Generated #
 ############
 .idea/
