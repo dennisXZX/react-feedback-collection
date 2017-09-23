@@ -7,7 +7,7 @@ const passport = require('passport');
 // import private data
 const keys = require('./config/keys');
 
-// create MongoDB collections
+// create MongoDB users collection
 require('./models/User');
 
 // connect to MongoDB
@@ -20,13 +20,14 @@ require('./services/passport');
 const app = express();
 
 /*
-	middlewares make some pre-processing to the upcoming request then send it to routes 
+	middlewares make some pre-processing to the upcoming request then send it to route handlers
 */
-// enable cookie
+// enable cookie in Express using cookie-session library
 app.use(
 	cookieSession({
 		// set cookie expire time to be 30 days in milliseconds
 		maxAge: 30 * 24 * 60 * 60 * 1000,
+		// keys to encrypt our cookie, can provide multiple keys for better security
 		keys: [keys.cookieKey]
 	})
 );

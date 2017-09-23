@@ -19,6 +19,7 @@ passport.serializeUser((user, done) => {
 
 // used to deserialize the user
 passport.deserializeUser((id, done) => {
+	// find the user in MongoDB
 	User.findById(id)
 		.then((user) => {
 			done(null, user);
@@ -43,6 +44,8 @@ passport.use(
 
 			if (existingUser) {
 				// return the existing user
+				// the done method is called when authentication is completed
+				// the first argument is an error object, the second argument is the user record
 				done(null, existingUser);
 			} else {
 				// create a new user in User collection
