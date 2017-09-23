@@ -94,8 +94,8 @@ app.get(
 ```
 // After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included
 app.get(
-	'/auth/google/callback',
-	passport.authenticate('google')
+  '/auth/google/callback',
+  passport.authenticate('google')
 );
 ```
 
