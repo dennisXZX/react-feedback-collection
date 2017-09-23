@@ -41,6 +41,4 @@ React APP
 
 The following diagram shows the relationship between Node.js and Express
 
-```
-
-```
+![Relationship between Node.js and Express](./diagrams/express_and_node.png)
