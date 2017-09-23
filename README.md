@@ -8,8 +8,6 @@ Powered by Create React App, Redux, Node.js, Express, PassportJS and MongoDB.
 - run `npm run dev` to run the app server
 - default port: `localhost:3000`
 
-========================================
-
 ### App Flow
 
 1. User signs up via OAuth (Express + MongoDB + PassportJS)
@@ -37,7 +35,9 @@ React APP
  Express
     |
  MongoDB
-```     
+```
+
+The app will be hosted on Heroku. Both development and production environment have a separate MongoDB, GoogleAPI and Cookie key. The production environment setting can be found in `server/config/prod.js`
 
 ### Node.js and Express
 
@@ -47,7 +47,11 @@ The following diagram shows the relationship between Node.js and Express
 
 We will set our Node.js to listen to port 5000 on our local machine. When an HTTP request comes to port 5000, Node.js will hand the incoming request to Express. Upon receiving the request, Express will look through all the route handlers to determine which one should be responsible for handling the request. The route handler responsible for the request will then process it and generates a response, which will then be sent back to Node.js. Finally, Node.js will send the response back to the request.
 
+The following diagram shows how Express works.
+
 ![Express Workflow](./diagrams/express_workflow.png)
+
+When a request from browser comes to Express, it first goes through a series of middlewares for some pre-processing, and then is sent to different route handlers to generate a proper response, which will be sent to whoever make the initial request.
 
 ### OAuth and PassportJS
 
@@ -113,10 +117,20 @@ passport.use(
       proxy: true
     }, (accessToken, refreshToken, profile, done) => {
       // this callback function is executed
+			const existingUser = await User.findOne({ googleId: profile.id });
+
+			if (existingUser) {
+				done(null, existingUser);
+			} else {
+				const user = await new User({ googleId: profile.id }).save();
+				done(null, user);
+			}
     }
   )
 );
 ```
+
+7. In the callback function, the user record is retrieved and handed to passport.serializeUser() to generate a unique token
 
 ### MongoDB and Mongoose
 
@@ -137,7 +151,7 @@ Each collection can have multiple records, with each record a plain Javascript o
 MongoDB Record
 ------------------------------------
 | {                  | {           |
-|   "id": 1,         |   "id": 2   |
+|     "id": 1,       |    "id": 2  |
 |   "name": "dennis" |   "age": 30 |
 | }                  | }           |
 ------------------------------------

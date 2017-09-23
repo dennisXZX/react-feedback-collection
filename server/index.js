@@ -19,10 +19,7 @@ require('./services/passport');
 // create a running express app
 const app = express();
 
-/*
-	middlewares make some pre-processing to the upcoming request then send it to route handlers
-*/
-// enable cookie in Express using cookie-session library
+// enable cookie in Express using cookie-session middleware, which will attach the property 'session' to req, which can be verified in /api/current_user route
 app.use(
 	cookieSession({
 		// set cookie expire time to be 30 days in milliseconds
