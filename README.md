@@ -65,25 +65,25 @@ When we use PassportJS to handle OAuth, we have to install a general Passport li
 
 // inform Express to handle OAuth using PassportJS
 passport.use(
-	new GoogleStrategy(
-		{
-			clientID: keys.googleClientID,
-			clientSecret: keys.googleClientSecret,
-			callbackURL: '/auth/google/callback',
-			proxy: true
-		}, (accessToken, refreshToken, profile, done) => {
-			// this callback function is called when authentication is complete
-		}
-	)
+  new GoogleStrategy(
+    {
+      clientID: keys.googleClientID,
+      clientSecret: keys.googleClientSecret,
+      callbackURL: '/auth/google/callback',
+      proxy: true
+    }, (accessToken, refreshToken, profile, done) => {
+      // this callback function is called when authentication is complete
+    }
+  )
 );
 
 // set up the authentication route
 app.get(
-	'/auth/google',
-	passport.authenticate('google', {
-		// specify what permissions we ask for
-		scope: ['profile', 'email']
-	})
+  '/auth/google',
+  passport.authenticate('google', {
+    // specify what permissions we ask for
+    scope: ['profile', 'email']
+  })
 );
 ```
 
@@ -105,16 +105,16 @@ app.get(
 
 ```
 passport.use(
-	new GoogleStrategy(
-		{
-			clientID: keys.googleClientID,
-			clientSecret: keys.googleClientSecret,
-			callbackURL: '/auth/google/callback',
-			proxy: true
-		}, (accessToken, refreshToken, profile, done) => {
-			// this callback function is executed
-		}
-	)
+  new GoogleStrategy(
+    {
+      clientID: keys.googleClientID,
+      clientSecret: keys.googleClientSecret,
+      callbackURL: '/auth/google/callback',
+      proxy: true
+    }, (accessToken, refreshToken, profile, done) => {
+      // this callback function is executed
+    }
+  )
 );
 ```
 
