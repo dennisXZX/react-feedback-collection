@@ -9,7 +9,7 @@ module.exports = (app) => {
 		})
 	);
 
-	// Passport asks for user details with the code from initialization
+	// Passport asks for user details with the Google code from initialization
 	app.get(
 		'/auth/google/callback',
 		passport.authenticate('google')
@@ -22,6 +22,7 @@ module.exports = (app) => {
 		res.send("You have successfully logged out.");
 	});
 
+	// check current login user info
 	app.get('/api/current_user', (req, res) => {
 		res.send(req.user);
 	});

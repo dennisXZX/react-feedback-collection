@@ -42,3 +42,5 @@ React APP
 The following diagram shows the relationship between Node.js and Express
 
 ![Relationship between Node.js and Express](./diagrams/express_and_node.png)
+
+We will set our Node.js to listen to port 5000 on our local machine. When an HTTP request comes to port 5000, Node.js will hand the incoming request to Express. Upon receiving the request, Express will look through all the route handlers to determine which one should be responsible for handling the request. The route handler responsible for the request will then process it and generates a response, which will then be sent back to Node.js. Finally, Node.js will send the response back to the request.
