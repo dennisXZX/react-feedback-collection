@@ -55,11 +55,21 @@ When a request from browser comes to Express, it first goes through a series of 
 
 ### OAuth and PassportJS
 
+There are three main parts in using PassportJS.
+
+- Requiring the module and using its passport.initialize() and passport.session() middleware with express.
+
+- Configuring passport with at least one Strategy and setting up passport's serializeUser and deserializeUser methods.
+
+- Specifying a route which uses the passport.authenticate middleware to actually authenticate a user.
+
+Here is an OAuth workflow involving PassportJS.
+
 ![OAuth Workflow](./diagrams/OAuth_flow.png)
 
-1. User clicks 'Login' button and will be directed to localhost:5000/auth/google
+1. User clicks 'Login' button and will be directed to localhost:5000/auth/google, resulting in the execution of passport.authenticate().
 
-2. PassportJS will direct user to Google with an google client ID and client secret to ask for permission
+2. As the passport.authenticate() is configured to handle Google strategy, PassportJS will direct user to Google with an Google client ID and client secret to ask for permission
 
 
 ```

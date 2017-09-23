@@ -6,5 +6,5 @@ const userSchema = new Schema({
 	googleId: String
 });
 
-// create a new MongoDB collection
+// create a new MongoDB collection named 'users'
 mongoose.model('users', userSchema);

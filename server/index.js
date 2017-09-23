@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 
-// import private data
+// import keys for development environment
 const keys = require('./config/keys');
 
 // create MongoDB users collection
@@ -19,7 +19,7 @@ require('./services/passport');
 // create a running express app
 const app = express();
 
-// enable cookie in Express using cookie-session middleware, which will attach the property 'session' to req, which can be verified in /api/current_user route
+// enable cookie in Express using cookie-session middleware, which will attach the property 'session' to req. It can be verified in '/api/current_user' route
 app.use(
 	cookieSession({
 		// set cookie expire time to be 30 days in milliseconds
@@ -29,11 +29,13 @@ app.use(
 	})
 );
 
+// middlewares to initialize PassportJS and enable persistent login session
 app.use(passport.initialize());
 app.use(passport.session());
 
 // import routes
 const authRoutes = require('./routes/authRoutes');
+
 // execute authentication routes, for simplicity, we can use require('./routes/authRoutes')(app)
 authRoutes(app);
 
