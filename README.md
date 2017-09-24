@@ -6,7 +6,8 @@ Powered by Create React App, Redux, Node.js, Express, PassportJS and MongoDB.
 - cd into server folder and run `npm install` to install the dependencies
 - cd into client folder and run `npm install` to install the dependencies
 - run `npm run dev` to run the app server
-- default port: `localhost:3000`
+- default port for React server: `localhost:3000`
+- default port for Express server" `localhost:5000`
 
 ### App Flow
 
