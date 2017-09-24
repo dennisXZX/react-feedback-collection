@@ -36,6 +36,8 @@ passport.use(
 			clientID: keys.googleClientID,
 			clientSecret: keys.googleClientSecret,
 			callbackURL: '/auth/google/callback',
+			// since we are hosting our app on Heroku, Heroku uses a proxy to ensure traffic
+			// is being routed to the correct server
 			proxy: true
 		}, 
 		// this callback function is called when a Google user profile is returned
