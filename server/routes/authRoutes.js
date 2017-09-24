@@ -10,10 +10,14 @@ module.exports = (app) => {
 		})
 	);
 
-	// After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included. The user details can be accessed from the 'profile' property in GoogleStrategy callback function.
+	// After user grants permission and Google redirects the user back with a code, Passport.authenticate middleware extracts the Google code from URL and then asks Google for user details we specified with the Google code included. The user details can be accessed from the 'profile' property in GoogleStrategy callback function.
 	app.get(
 		'/auth/google/callback',
-		passport.authenticate('google')
+		passport.authenticate('google'),
+		// redirect to '/surveys' route when Google authentication is complete
+		(req, res) => {
+			res.redirect('/surveys');
+		}
 	);
 
 	// handle user logout
