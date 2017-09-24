@@ -24,7 +24,7 @@ module.exports = (app) => {
 	app.get('/api/logout', (req, res) => {
 		// use logout() method provided by Passport.js to log user out
 		req.logout();
-		res.send("You have successfully logged out.");
+		res.redirect('/');
 	});
 
 	// check current login user info
