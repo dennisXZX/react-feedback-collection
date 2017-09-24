@@ -38,6 +38,8 @@ React APP
  MongoDB
 ```
 
+### Development Environment
+
 The app will be hosted on Heroku. Both development and production environment have a separate config file. The production environment config file can be found in `server/config/prod.js`
 
 Since we will be utilizing Create React App to build our app, the React server comes with the tool will be responsible for delivering the front end code to browser. The Express server, however, will only handle data requests and communicate with the browser in JSON.
@@ -46,13 +48,13 @@ Since we will be utilizing Create React App to build our app, the React server c
 ====================
        Browser
 ====================
-    ^          ^
+    |          |
     |          |
  bundle.js   JSON
     |          |
   React     Express
  Server      Server
-               ^
+               |
                |
             MongoDB
 ```
@@ -66,6 +68,39 @@ To launch the two servers at the same time in a painless way, we would use `conc
   "client": "npm run start --prefix client",
   "dev": "concurrently \"npm run server\" \"npm run client\""
 }
+```
+
+In order to connect the React server (localhost:3000) and Express server (localhost:5000), we need to add a proxy to the create-react-app server.
+
+```
+// add this proxy proerty in the package.json file
+
+"proxy": {
+  "/auth/google": {
+    "target": "http://localhost:5000"
+  }
+}
+```
+
+Essentially, we have set up a structure like the following. Any request trying to access a route defined in the proxy will then be automatically directed to the target domain. So any data request from the browser will be directed to Express server, however, as far as the browser concern, it is only dealing with the React server all the time. This structure cleverly bypasses the issue of cookie security concern. We would stumble upon cookie seurity and CORS issue if we serve our front end code and data in two separate servres.
+
+```
+====================
+      Browser
+====================
+    |          |
+    |          |
+ bundle.js   JSON
+    |          |
+====================    
+  React      Proxy
+  Server     Setting
+====================
+               |
+               |
+====================
+   Express Server
+====================
 ```
 
 ### Node.js and Express
