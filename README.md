@@ -37,7 +37,7 @@ React APP
  MongoDB
 ```
 
-The app will be hosted on Heroku. Both development and production environment have a separate MongoDB, GoogleAPI and Cookie key. The production environment setting can be found in `server/config/prod.js`
+The app will be hosted on Heroku. Both development and production environment have a separate config file. The production environment config file can be found in `server/config/prod.js`
 
 ### Node.js and Express
 
@@ -45,13 +45,13 @@ The following diagram shows the relationship between Node.js and Express
 
 ![Relationship between Node.js and Express](./diagrams/express_and_node.png)
 
-We will set our Node.js to listen to port 5000 on our local machine. When an HTTP request comes to port 5000, Node.js will hand the incoming request to Express. Upon receiving the request, Express will look through all the route handlers to determine which one should be responsible for handling the request. The route handler responsible for the request will then process it and generates a response, which will then be sent back to Node.js. Finally, Node.js will send the response back to the request.
+We will set Node.js to listen to port 5000 on our local machine. When an HTTP request comes to port 5000, Node.js will hand the incoming request to Express. Upon receiving the request, Express will look through all the route handlers to determine which one should be responsible for handling the request. The route handler responsible for the request will then process it and generate a response, which will then be sent back to Node.js. Finally, Node.js will send the response back to request maker.
 
-The following diagram shows how Express works.
+The following diagram takes a closer look at how Express works.
 
 ![Express Workflow](./diagrams/express_workflow.png)
 
-When a request from browser comes to Express, it first goes through a series of middlewares for some pre-processing, and then is sent to different route handlers to generate a proper response, which will be sent to whoever make the initial request.
+When a request from browser comes to Express, it first goes through a series of middlewares for some pre-processing, and then is sent to different route handlers to generate a proper response, which will then be sent to whoever make the initial request.
 
 ### OAuth and PassportJS
 
@@ -74,7 +74,8 @@ Here is an OAuth workflow involving PassportJS.
 
 ```
 /*
-When we use PassportJS to handle OAuth, we have to install a general Passport library as well as a Passport strategy. A strategy is used to handle a specific provider, such as, Google, Facebook, etc.
+When we use PassportJS to handle OAuth, we have to install a general Passport library as well as a Passport strategy. 
+A strategy is used to handle a specific provider, such as, Google, Facebook, etc.
 */
 
 // inform Express to handle OAuth using PassportJS
@@ -101,9 +102,9 @@ app.get(
 );
 ```
 
-3. User grants permission to the application and be redirected back to an authentication complete URL with a code
+3. User grants permission to the application and be redirected back to the callbackURL specified in the strategy with a code
 
-4. Extract the code from URL and send request to Google with code included
+4. PassportJS Extracts the code from URL and sends request to Google with the code included
 
 ```
 // After user grants permission and Google redirects the user back with a code, Passport extracts the Google code from URL and then asks Google for user details we specified with the Google code included
@@ -127,20 +128,31 @@ passport.use(
       proxy: true
     }, (accessToken, refreshToken, profile, done) => {
       // this callback function is executed
-			const existingUser = await User.findOne({ googleId: profile.id });
+      const existingUser = await User.findOne({ googleId: profile.id });
 
-			if (existingUser) {
-				done(null, existingUser);
-			} else {
-				const user = await new User({ googleId: profile.id }).save();
-				done(null, user);
-			}
+      if (existingUser) {
+        done(null, existingUser);
+      } else {
+        const user = await new User({ googleId: profile.id }).save();
+        done(null, user);
+      }
     }
   )
 );
 ```
 
-7. In the callback function, the user record is retrieved and handed to passport.serializeUser() to generate a unique token
+7. In the callback function, the user record is retrieved and handed to passport.serializeUser() to generate a unique token. The result of serializeUser method is attached to the session as `req.session.passport.user`.
+
+```
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+```
+```
+app.get('/api/current_user', (req, res) => {
+  res.send(req.session.passport.user);
+});
+```
 
 ### MongoDB and Mongoose
 
@@ -167,4 +179,4 @@ MongoDB Record
 ------------------------------------
 ```
 
-Mongoose matches a model class to MongoDB collection and a model instance to a MongoDB record, so we can easily manipulate them in Javascript.
+Mongoose matches a model class to MongoDB collection and a model instance to a MongoDB record, so we can easily manipulate MongoDB data in Javascript.
