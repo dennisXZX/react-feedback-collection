@@ -103,6 +103,14 @@ Essentially, we have set up a structure like the following. Any request trying t
 ====================
 ```
 
+__OAuth Flow in Development__
+
+![OAuth flow in development](./diagrams/oauth_flow_development.png)
+
+__OAuth Flow in Production__
+
+![OAuth flow in production](./diagrams/oauth_flow_production.png)
+
 ### Node.js and Express
 
 The following diagram shows the relationship between Node.js and Express
@@ -117,7 +125,7 @@ The following diagram takes a closer look at how Express works.
 
 When a request from browser comes to Express, it first goes through a series of middlewares for some pre-processing, and then is sent to different route handlers to generate a proper response, which will then be sent to whoever make the initial request.
 
-### OAuth and PassportJS
+### PassportJS
 
 There are three main parts in using PassportJS.
 
@@ -134,7 +142,6 @@ Here is an OAuth workflow involving PassportJS.
 1. User clicks 'Login' button and will be directed to localhost:5000/auth/google, resulting in the execution of passport.authenticate().
 
 2. As the passport.authenticate() is configured to handle Google strategy, PassportJS will direct user to Google with an Google client ID and client secret to ask for permission
-
 
 ```
 /*
