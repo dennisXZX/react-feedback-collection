@@ -255,3 +255,22 @@ MongoDB Record
 ```
 
 Mongoose matches a model class to MongoDB collection and a model instance to a MongoDB record, so we can easily manipulate MongoDB data in Javascript.
+
+### Redux-thunk Middleware
+
+The normal flow of redux goes like `React Component`->`Action Creator`->`Action`->`Reducers`->`Store`->`React Component`.
+
+In redux, action creator immediately returns an action, which is then dispatched to all reducers. However, sometimes we don't want to return an action immediately, so we need a way to manipulate the behavior of action creator. Redux-thunk middleware allows us to control when to dispatch an action. When it detects a function, instead of an object, is returned from an action creator, it would kick in.
+
+```
+// the 'dispatch' parameter is the function responsible for dispatching the action to all reducers
+export const fetchUser = () => {
+  return function (dispatch) {
+    axios.get('/api/current_user')
+      .then((res) => dispatch({
+        type: FETCH_USER,
+        payload: res
+      }))
+  }
+};
+```
