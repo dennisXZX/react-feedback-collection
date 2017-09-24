@@ -105,9 +105,13 @@ Essentially, we have set up a structure like the following. Any request trying t
 
 __OAuth Flow in Development__
 
+After setting up the proxy, our OAuth flow now looks like the following diagram.
+
 ![OAuth flow in development](./diagrams/oauth_flow_development.png)
 
 __OAuth Flow in Production__
+
+In production, OAuth flow is less complicated as there is no proxy involved.
 
 ![OAuth flow in production](./diagrams/oauth_flow_production.png)
 
