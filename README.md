@@ -1,6 +1,6 @@
 ## React Feedback Collection System - Emaily
 
-Powered by Create React App, Redux, Node.js, Express, PassportJS and MongoDB.
+Powered by Create React App, React-router, Redux, Node.js, Express, PassportJS, MongoDB and Materialize.
 
 ### Steps
 - cd into server folder and run `npm install` to install the dependencies
@@ -274,3 +274,22 @@ export const fetchUser = () => {
   }
 };
 ```
+
+### Billing
+
+__Rule of Thumb__
+
+- Never accept raw credit card numbers
+- Never store credit card numbers
+- Always use an outside payment processor (Stripe)
+
+__Billing Flow__
+
+1. User clicks 'Add Credit'
+2. Inform Stripe to show a credit card form
+3. User enters credit card details
+4. Details sent directly from the form to Stripe
+5. Stripe sends back a token representing the charge
+6. We send the token to our API
+7. Our API confirms the charge is successful with Stripe
+8. Add credits to user's account
