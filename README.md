@@ -39,6 +39,34 @@ React APP
 
 The app will be hosted on Heroku. Both development and production environment have a separate config file. The production environment config file can be found in `server/config/prod.js`
 
+Since we will be utilizing Create React App to build our app, the React server comes with the tool will be responsible for delivering the front end code to browser. The Express server, however, will only handle data requests and communicate with the browser in JSON.
+
+```
+====================
+       Browser
+====================
+    ^          ^
+    |          |
+ bundle.js   JSON
+    |          |
+  React     Express
+ Server      Server
+               ^
+               |
+            MongoDB
+```
+
+To launch the two servers at the same time in a painless way, we would use `concurrently` for help.
+
+```
+"scripts": {
+  "start": "node index.js",
+  "server": "nodemon index.js",
+  "client": "npm run start --prefix client",
+  "dev": "concurrently \"npm run server\" \"npm run client\""
+}
+```
+
 ### Node.js and Express
 
 The following diagram shows the relationship between Node.js and Express
