@@ -15,6 +15,7 @@ export const fetchUser = () => async (dispatch) => {
 };
 
 export const handleToken = (token) => async (dispatch) => {
+	// call the API with the token object returned from StripeCheckout component
 	const res = await axios.post('./api/stripe', token);
 
 	dispatch({
