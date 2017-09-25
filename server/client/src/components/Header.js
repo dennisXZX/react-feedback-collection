@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 // import components
 import StripeWrapper from './StripeWrapper';
 
+// import CSS
+import './Header.css';
+
 class Header extends Component {
 	// render different content based on the state of auth
 	renderContent = () => {
@@ -16,6 +19,7 @@ class Header extends Component {
 			default:
 				return [
 					<li key="stripe"><StripeWrapper /></li>,
+					<li key="credit">Credits: {this.props.auth.credits}</li>,
 					<li key="logout"><a href="/api/logout">Logout</a></li>
 				];
 		}
