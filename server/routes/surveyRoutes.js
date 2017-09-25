@@ -8,7 +8,11 @@ const Survey = mongoose.model('surveys');
 
 module.exports = (app) => {
 
-	app.post('/api/surveys', requireLogin, requireCredit, (req, res) => {
+	app.get('/api/surveys/thanks', (req, res) => {
+		res.send('Thanks for voting!');
+	});
+
+	app.post('/api/surveys', requireLogin, requireCredit, async (req, res) => {
 		const { title, subject, body, recipients } = req.body;
 
 		// create a new survey instance
@@ -25,10 +29,24 @@ module.exports = (app) => {
 			dateSent: Date.now()
 		});
 
-		// send an email
+		// create a Mailer instance, which represents a mail
 		const mailer = new Mailer(survey, surveyTemplate(survey));
-		mailer.send();
 
-	});
+		try {
+			// send emails
+			await mailer.send();
+			// save the survey to database
+			await survey.save();
+			// update user credit and save it to database
+			req.user.credits -= 1;
+			const user = await req.user.save();
+
+			// return the updated user instance
+			res.send(user);
+		} catch (err) {
+			res.status(422).send(err);
+		}
+
+	}); // END of app.post('/api/surveys')
 
 };
