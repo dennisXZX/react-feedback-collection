@@ -1,6 +1,6 @@
 ## React Feedback Collection System - Emaily
 
-Powered by Create React App, React-router, Redux, Node.js, Express, PassportJS, MongoDB and Materialize.
+Powered by Create React App, React-router, Redux, Node.js, Express, PassportJS, MongoDB, Stripe, SendGrid and Materialize.
 
 ### Steps
 - cd into server folder and run `npm install` to install the dependencies

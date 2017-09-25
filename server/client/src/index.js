@@ -13,6 +13,9 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import App from './components/App';
 
+import axios from 'axios';
+window.axios = axios;
+
 // create a store for application state
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
