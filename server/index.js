@@ -8,8 +8,9 @@ const bodyParser = require('body-parser');
 // import keys for development environment
 const keys = require('./config/keys');
 
-// create MongoDB users collection
+// create MongoDB collection
 require('./models/User');
+require('./models/Survey');
 
 // connect to MongoDB
 mongoose.connect(keys.mongoURL);
@@ -40,6 +41,7 @@ app.use(passport.session());
 // import routes, passing Express app as the parameter
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
 	// Express will serve up production assets
