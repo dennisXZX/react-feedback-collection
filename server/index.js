@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 
 // import keys for development environment
 const keys = require('./config/keys');
@@ -19,6 +20,9 @@ require('./services/passport');
 // create a running express app
 const app = express();
 
+// parse incoming request bodies in a middleware before your handlers, available under the req.body property.
+app.use(bodyParser.json());
+
 // enable cookie in Express using cookie-session middleware, which will attach the property 'session' to req. It can be verified in '/api/current_user' route
 app.use(
 	cookieSession({
@@ -33,11 +37,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// import routes
-const authRoutes = require('./routes/authRoutes');
-
-// execute authentication routes, for simplicity, we can use require('./routes/authRoutes')(app)
-authRoutes(app);
+// import routes, passing Express app as the parameter
+require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 
 // use Heroku port in production environment or port 5000 in local development environment
 const PORT = process.env.PORT || 5000;
