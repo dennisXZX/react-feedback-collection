@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+// import components
+import StripeWrapper from './StripeWrapper';
+
 class Header extends Component {
 	// render different content based on the state of auth
 	renderContent = () => {
@@ -11,7 +14,10 @@ class Header extends Component {
 			case false:
 				return <li><a href="/auth/google">Google</a></li>;
 			default:
-				return <li><a href="/api/logout">Logout</a></li>;
+				return [
+					<li key="stripe"><StripeWrapper /></li>,
+					<li key="logout"><a href="/api/logout">Logout</a></li>
+				];
 		}
 	};
 
