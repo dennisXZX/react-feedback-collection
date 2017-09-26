@@ -6,6 +6,8 @@ import SurveyField from './SurveyField';
 import validateEmails from '../../utils/validateEmails';
 import _ from 'lodash';
 
+// TODO provide customized error messages
+// an array to store info for each form field
 const FIELDS = [
 	{ label: 'Survey Title', name: 'title', noValueError: 'You must provide a survey title.'},
 	{ label: 'Subject Title', name: 'subject'},
@@ -15,24 +17,25 @@ const FIELDS = [
 
 class SurveyForm extends Component {
 
+	// iterate FIELDS array, generate a <Field> component for each object
 	renderFields() {
-		return _.map(FIELDS, (field) => {
+		return _.map(FIELDS, ({ label, name }) => {
 			return (
 				<Field
-					key={field.name}
-					name={field.name}
+					key={name}
+					name={name}
 					type="text"
-					label={field.label}
+					label={label}
 					component={SurveyField}
 				/>
 			)
-		})
+		});
 	}
 
 	render() {
 		return (
 			<div>
-				<form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+				<form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
 					{this.renderFields()}
 					<Link to="/surveys" className="red btn-flat white-text">
 						Cancel
@@ -47,11 +50,15 @@ class SurveyForm extends Component {
 	}
 }
 
+// validate all form fields
+// 'values' parameter containing all field values
 function validate(values) {
 	const errors = {};
 
+	// check if there are any invalid emails
 	errors.emails = validateEmails(values.emails || '');
 
+	// iterate FIELDS array, check if each field exists in the 'values' object
 	_.each(FIELDS, ({ name }) => {
 		if (!values[name]) {
 			errors[name] = 'You must provide a value';
