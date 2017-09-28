@@ -3,29 +3,22 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import SurveyField from './SurveyField';
+import formFields from './formFields';
 import validateEmails from '../../utils/validateEmails';
 import _ from 'lodash';
 
-// TODO provide customized error messages
-// an array to store info for each form field
-const FIELDS = [
-	{ label: 'Survey Title', name: 'title', noValueError: 'You must provide a survey title.'},
-	{ label: 'Subject Title', name: 'subject'},
-	{ label: 'Email Body', name: 'body' },
-	{ label: 'Recipient List', name: 'emails'}
-];
-
 class SurveyForm extends Component {
 
-	// iterate FIELDS array, generate a <Field> component for each object
+	// iterate formFields array, generate a <Field> component for each object
 	renderFields() {
-		return _.map(FIELDS, ({ label, name }) => {
+		return _.map(formFields, ({ label, name, placeholder }) => {
 			return (
 				<Field
 					key={name}
 					name={name}
 					type="text"
 					label={label}
+					placeholder={placeholder}
 					component={SurveyField}
 				/>
 			)
@@ -56,10 +49,10 @@ function validate(values) {
 	const errors = {};
 
 	// check if there are any invalid emails
-	errors.emails = validateEmails(values.emails || '');
+	errors.recipients = validateEmails(values.recipients || '');
 
-	// iterate FIELDS array, check if each field exists in the 'values' object
-	_.each(FIELDS, ({ name }) => {
+	// iterate formFields array, check if each field exists in the 'values' object
+	_.each(formFields, ({ name }) => {
 		if (!values[name]) {
 			errors[name] = 'You must provide a value';
 		}
@@ -68,7 +61,13 @@ function validate(values) {
 	return errors;
 }
 
+/*
+* validate: accepts a function that validates all the form fields
+* form: accepts a string that specifies the namespace for the current form
+* destroyOnUnmount: accepts a boolean to indicate whether form field values are perserved when the redux form is destroyed
+*/
 export default reduxForm({
 	validate: validate,
-	form: 'surveyForm'
+	form: 'surveyForm',
+	destroyOnUnmount: false
 })(SurveyForm);
