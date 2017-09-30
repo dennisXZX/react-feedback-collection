@@ -13,6 +13,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import App from './components/App';
 
+// TODO remove these when the app is complete
+// for testing purpose, so we can test API using axios in browser console
 import axios from 'axios';
 window.axios = axios;
 

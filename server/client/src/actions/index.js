@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { FETCH_USER } from "./types";
+import { FETCH_USER, FETCH_SURVEYS } from "./types";
 
 /* redux action creator immediately returns an action, which is then dispatched to all reducers. redux-thunk middleware allows us to control when to dispatch an action. When it detects a function is returned from an action creator, it would kick in */
 export const fetchUser = () => async (dispatch) => {
@@ -35,4 +35,13 @@ export const submitSurvey = (values, history) => async (dispatch) => {
 		payload: res.data
 	});
 
+};
+
+export const fetchSurveys = () => async (dispatch) => {
+	const res = await axios.get('/api/surveys');
+
+	dispatch({
+		type: FETCH_SURVEYS,
+		payload: res.data
+	});
 };
