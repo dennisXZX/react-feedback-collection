@@ -12,7 +12,7 @@ const Survey = mongoose.model('surveys');
 
 module.exports = (app) => {
 
-	app.get('/api/surveys/thanks', (req, res) => {
+	app.get('/api/surveys/:surveyId/:choice', (req, res) => {
 		res.send('Thanks for voting!');
 	});
 
@@ -56,7 +56,8 @@ module.exports = (app) => {
 				// increment property 'yes' or 'no' by one, using ES6 key interpolation
 				$inc: { [event.choice]: 1 },
 				// set the 'responded' property of recipients sub-document collection record found by ($elemMatch) to 'true'
-				$set: { 'recipients.$.responded': true }
+				$set: { 'recipients.$.responded': true },
+				lastResponded: new Date()
 			}).exec(); // doesn't handle the promise as SendGrid doesn't expect a response.
 		});
 
