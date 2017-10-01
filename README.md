@@ -275,6 +275,17 @@ export const fetchUser = () => {
 };
 ```
 
+### Webhook
+
+In development mode, we need a localtunnel to help receive data from SendGrid regarding the email click events.
+
+```
+// direct traffic received from sub-domain to port 5000
+"webhook": "lt -p 5000 --subdomain subDomainName"
+```
+
+After setting up localtunnel on our machine, we should head to SendGrid to specify a URL for event notification POST request.
+
 ### Billing
 
 __Rule of Thumb__
