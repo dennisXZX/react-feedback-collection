@@ -5,9 +5,9 @@ Powered by Create React App, React-router, Redux, Node.js, Express, PassportJS, 
 ### Steps
 - cd into server folder and run `npm install` to install the dependencies
 - cd into client folder and run `npm install` to install the dependencies
-- run `npm run dev` to run the app server
+- cd into server folder and run `npm run dev` to run the app server
 - default port for React server: `localhost:3000`
-- default port for Express server" `localhost:5000`
+- default port for Express server: `localhost:5000`
 
 ### App Flow
 
@@ -16,7 +16,7 @@ Powered by Create React App, React-router, Redux, Node.js, Express, PassportJS, 
 3. User creates a new email campaign (React + Redux)
 4. User enters list of emails to send survey (React + Redux + Redux Form)
 5. Emaily sends emails to list of surveyees (Email Provider)
-6. Surveyees click on link in email to provide feedback (Email Provider + Express + MongoDB)
+6. Surveyees click on a link in email to provide feedback (Email Provider + Express + MongoDB)
 7. Emaily tabulates and displays feedback (MongoDB)
 8. User sees report of all survey responses (MongoDB + React + Redux)
 
@@ -53,13 +53,13 @@ Since we will be utilizing Create React App to build our app, the React server c
  bundle.js   JSON
     |          |
   React     Express
- Server      Server
+ Server     Server
                |
                |
             MongoDB
 ```
 
-To launch the two servers at the same time in a painless way, we would use `concurrently` for help.
+To launch the two servers at the same time in a painless way, we would use `concurrently` package for help.
 
 ```
 "scripts": {
