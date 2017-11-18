@@ -292,7 +292,7 @@ __Rule of Thumb__
 
 - Never accept raw credit card numbers
 - Never store credit card numbers
-- Always use an outside payment processor (Stripe)
+- Always use an outside payment processor (Stripe in this project)
 
 __Billing Flow__
 
@@ -304,3 +304,10 @@ __Billing Flow__
 6. We send the token to our API
 7. Our API confirms the charge is successful with Stripe
 8. Add credits to user's account
+
+__Stripe Testing Account__
+
+Email: Any Email
+Number: 4242 4242 4242 4242
+Date: Any Date in the Future
+CVC: Any 3 Numbers
